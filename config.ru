@@ -11,3 +11,4 @@ Mongoid.load!('mongoid.yml')
 
 map('/') { run ApplicationController }
 map('/register') { run RegisterController }
+map('/login') { run LoginController }
