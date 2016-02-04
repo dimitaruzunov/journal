@@ -1,0 +1,14 @@
+nav.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      a.navbar-brand href="/" Journal
+    #navbar.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.active: a href="/" Home
+
+        - if not authenticated?
+          li: a href="/login" Log in
+          li: a href="/register" Register
+
+        - else
+          li: a href="/logout" Log out

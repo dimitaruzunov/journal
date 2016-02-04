@@ -7,20 +7,7 @@ html
     link href="/css/bootstrap.min.css" rel="stylesheet"
     link href="/css/style.css" rel="stylesheet"
   body
-    nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          a.navbar-brand href="/" Journal
-        #navbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li.active
-              a href="/" Home
-            li
-              a href="/register" Register
-            li
-              a href="/login" Log in
-            li
-              a href="/logout" Log out
+    == partial :navigation
 
     .container.main-container
       == yield
