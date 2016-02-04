@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      database: journal
+      hosts:
+        - localhost:27017
