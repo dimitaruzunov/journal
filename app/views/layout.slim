@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    title Journal
+    link href="/css/bootstrap.min.css" rel="stylesheet"
+    link href="/css/style.css" rel="stylesheet"
+  body
+    nav.navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand href="/" Journal
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a href="/" Home
+            li
+              a href="/register" Register
+
+    .container.main-container
+      == yield
