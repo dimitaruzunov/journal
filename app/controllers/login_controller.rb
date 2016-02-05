@@ -17,6 +17,9 @@ class LoginController < ApplicationController
 
   def authenticate(email, password)
     user = User.find_by_email(email)
-    session[:user] = user.id if user and user.password == password
+
+    if user and user.password == password
+      session[:user] = {id: user.id, email: user.email}
+    end
   end
 end
