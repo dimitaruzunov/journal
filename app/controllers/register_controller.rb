@@ -1,15 +1,11 @@
 class RegisterController < ApplicationController
-  get '/' do
-    redirect to '../' if authenticated?
-
+  get '/', authentication: false do
     slim :'register/register'
   end
 
-  post '/' do
-    redirect to '../' if authenticated?
-
+  post '/', authentication: false do
     user = User.create(email: params[:email], password: params[:password])
-    redirect to '../login' if user.valid?
+    redirect '/login' if user.valid?
 
     redirect to '/'
   end

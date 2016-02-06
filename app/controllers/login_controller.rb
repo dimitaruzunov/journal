@@ -1,25 +1,16 @@
 class LoginController < ApplicationController
-  get '/' do
-    redirect to '../' if authenticated?
-
+  get '/', authentication: false do
     slim :'login/login'
   end
 
-  post '/' do
-    redirect to '../' if authenticated?
-
-    redirect to '../' if authenticate(params[:email], params[:password])
-
-    redirect to '/'
-  end
-
-  private
-
-  def authenticate(email, password)
-    user = User.find_by_email(email)
-
-    if user and user.password == password
+  post '/', authentication: false do
+    user = User.find_by_email(params[:email])
+    if user and user.password == params[:password]
       session[:user] = {id: user.id, email: user.email}
     end
+
+    redirect '/day' if authenticated?
+
+    redirect '/'
   end
 end

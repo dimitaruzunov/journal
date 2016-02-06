@@ -1,5 +1,5 @@
 class DayController < ApplicationController
-  get '/:date?' do
+  get '/:date?', authentication: true do
     @date_string = params[:date] || Date.today.to_s
     date = Date.parse(@date_string)
     @lists = ListRepository.find_by_date(date)
@@ -7,7 +7,7 @@ class DayController < ApplicationController
     slim :'day/day'
   end
 
-  post '/:date/list' do
+  post '/:date/list', authentication: true do
     ListRepository.create_empty(params[:title], params[:date])
   end
 
