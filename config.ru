@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'mongoid'
+require 'bcrypt'
 require 'require_all'
 
 require_rel 'app'
