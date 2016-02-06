@@ -5,12 +5,8 @@ class LoginController < ApplicationController
 
   post '/', authentication: false do
     user = User.find_by_email(params[:email])
-    if user and user.password == params[:password]
-      session[:user] = {id: user.id, email: user.email}
-    end
+    authenticate user if user and user.password == params[:password]
 
-    redirect '/day' if authenticated?
-
-    redirect '/'
+    redirect to '/'
   end
 end

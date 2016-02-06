@@ -5,7 +5,7 @@ class RegisterController < ApplicationController
 
   post '/', authentication: false do
     user = User.create(email: params[:email], password: params[:password])
-    redirect '/login' if user.valid?
+    authenticate user if user.valid?
 
     redirect to '/'
   end
