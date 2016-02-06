@@ -1,0 +1,6 @@
+form action="/day/#{@date_string}/list" method="post"
+  input type='hidden' name="_method" value="delete"
+  input type='text' name="title" placeholder="List title"
+  input type='submit' value="Add new list"
+
+== partial :'day/lists', locals: {lists: @lists}
