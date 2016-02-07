@@ -1,31 +1,36 @@
 class List
-  class Item
-    attr_accessor :text
+  include Mongoid::Document
 
-    def initialize(text)
-      @text = text
+  field :title, type: String
+  field :date, type: Date
+  embeds_many :items
+  belongs_to :user, index: true
+
+  def add(text)
+    items << Item.new(text: text)
+  end
+
+  def remove(item_id)
+    item = items.find(item_id)
+    items.delete(item) if item
+  end
+
+  class << self
+    def create_empty(title, date, user_id)
+      create(title: title, date: date, user_id: user_id)
     end
-  end
 
-  include Enumerable
+    def find_by_date(date, user_id)
+      where(date: date, user_id: user_id)
+    end
 
-  attr_accessor :title, :date
+    def find_by_id(id, user_id)
+      where(id: id, user_id: user_id).first
+    end
 
-  def initialize(title, date, items = [])
-    @title = title
-    @date = date
-    @items = items
-  end
-
-  def each
-    @items.each(&proc)
-  end
-
-  def add(item)
-    @items << item
-  end
-
-  def remove(item)
-    @items.delete(item)
+    def delete_by_id(id, user_id)
+      found_list = find_by_id(id, user_id)
+      found_list.delete if found_list
+    end
   end
 end
