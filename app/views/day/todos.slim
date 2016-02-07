@@ -1,0 +1,8 @@
+ul.list-group
+  - for todo in todo_list.todos
+    li.list-group-item
+      = todo.text
+      form.inline-form action="/day/#{list.date.to_s}/list/#{list.id}/#{item.id}" method="post"
+        input type="hidden" name="_method" value="delete"
+        button.btn.btn-default.btn-xs type="submit"
+          span.glyphicon.glyphicon-remove
