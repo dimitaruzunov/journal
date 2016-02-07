@@ -6,8 +6,6 @@ class User
   field :password_hash, type: String
   has_many :lists
 
-  attr_protected :password_hash
-
   index({email: 1}, {unique: true, name: 'email_index'})
 
   validates_presence_of :email, message: 'Email address is required'
