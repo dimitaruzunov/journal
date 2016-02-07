@@ -1,4 +1,21 @@
-h3 = list.title
-ul
+h3
+  = list.title
+  form.inline-form action="/day/#{list.date.to_s}/list/#{list.id}" method="post"
+    input type="hidden" name="_method" value="delete"
+    button.btn.btn-default.btn-xs type="submit"
+      span.glyphicon.glyphicon-remove
+
+form.form-inline action="/day/#{list.date.to_s}/list/#{list.id}" method="post"
+  .form-group
+    input.form-control.input-sm type="text" name="text" placeholder="Item"
+  button.btn.btn-default.btn-xs type="submit"
+    span.glyphicon.glyphicon-ok
+
+ul.list-group
   - for item in list.items
-    li item.text
+    li.list-group-item
+      = item.text
+      form.inline-form action="/day/#{list.date.to_s}/list/#{list.id}/#{item.id}" method="post"
+        input type="hidden" name="_method" value="delete"
+        button.btn.btn-default.btn-xs type="submit"
+          span.glyphicon.glyphicon-remove
