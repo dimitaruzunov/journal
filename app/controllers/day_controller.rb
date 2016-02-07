@@ -8,6 +8,13 @@ class DayController < ApplicationController
 
     slim :'day/index'
   end
+  
+  post '/:date/todos', authentication: true do |date|
+    time = Time.now
+
+    @todo_list ||= TodoList.find_by_date(date, user_id)
+    @todo_list.add(params[:text], time.hour, time.min)
+  end
 
   post '/:date/list', authentication: true do |date|
     List.create_empty(params[:title], date, user_id)
