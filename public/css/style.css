@@ -3,8 +3,12 @@ body {
 }
 
 .main-container {
-  padding: 40px 15px;
-  text-align: center;
+  padding-top: 40px;
+}
+
+.inline-form {
+  display: inline;
+  padding-left: 10px;
 }
 
 .form-register {
