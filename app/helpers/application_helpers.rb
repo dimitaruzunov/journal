@@ -14,6 +14,10 @@ module ApplicationHelpers
     session[:user][:email] if authenticated?
   end
 
+  def user_id
+    session[:user][:id] if authenticated?
+  end
+
   def partial(template, options = {})
     slim template, options
   end
