@@ -17,6 +17,7 @@ class ApplicationController < Sinatra::Base
   end
 
   enable :sessions
+  enable :method_override
 
   get '/' do
     redirect '/day' if authenticated?
