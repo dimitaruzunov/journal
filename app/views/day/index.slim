@@ -1,12 +1,24 @@
 div.row
   div.col-xs-4
     h2 Todos
+
+    form.form-inline action="/day/#{@date_string}/todos" method="post"
+      .form-group
+        input.form-control type="text" name="text" placeholder="Todo..."
+      button.btn.btn-default type="submit" Add
+
+    == partial :'day/todos', locals: {todo_list: @todo_list}
+
   div.col-xs-4
     h2 Text
+
   div.col-xs-4
     h2 Lists
+
     form.form-inline action="/day/#{@date_string}/list" method="post"
       .form-group
         input.form-control type="text" name="title" placeholder="List title"
       button.btn.btn-default type="submit" Add
-    == partial :'day/lists', locals: {lists: @lists}
+
+    - for list in @lists
+      == partial :'day/list', locals: {list: list}
