@@ -4,6 +4,9 @@ class User
 
   field :email, type: String
   field :password_hash, type: String
+  has_many :lists
+
+  attr_protected :password_hash
 
   index({email: 1}, {unique: true, name: 'email_index'})
 
