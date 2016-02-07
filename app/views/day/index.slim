@@ -1,0 +1,12 @@
+div.row
+  div.col-xs-4
+    h2 Todos
+  div.col-xs-4
+    h2 Text
+  div.col-xs-4
+    h2 Lists
+    form.form-inline action="/day/#{@date_string}/list" method="post"
+      .form-group
+        input.form-control type="text" name="title" placeholder="List title"
+      button.btn.btn-default type="submit" Add
+    == partial :'day/lists', locals: {lists: @lists}
