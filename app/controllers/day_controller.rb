@@ -1,7 +1,7 @@
 class DayController < ApplicationController
   helpers DayHelpers
 
-  get '/:date?', authentication: true do |date_string|
+  get '/:date?', auth: true do |date_string|
     @date_string = date_string || Date.today.to_s
 
     redirect to '/' if not valid_date?(@date_string)
@@ -34,7 +34,7 @@ class DayController < ApplicationController
     slim :'day/index'
   end
   
-  post '/:date/todos', authentication: true do |date|
+  post '/:date/todos', auth: true do |date|
     time = Time.now
     hour = params[:hour] || time.hour
     min = params[:min] || time.min
@@ -45,14 +45,14 @@ class DayController < ApplicationController
     redirect to "/#{date}"
   end
 
-  get '/:date/todos/:id/edit', authentication: true do |date, id|
+  get '/:date/todos/:id/edit', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     @todo = todo_list.find_by_id(id)
     @date = date
     slim :'day/edit_todo'
   end
 
-  put '/:date/todos/:id', authentication: true do |date, id|
+  put '/:date/todos/:id', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     todo = todo_list.find_by_id(id)
     if not todo
@@ -62,7 +62,7 @@ class DayController < ApplicationController
     todo.update(params[:text], params[:hour], params[:min])
   end
 
-  put '/:date/todos/complete/:id', authentication: true do |date, id|
+  put '/:date/todos/complete/:id', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     todo = todo_list.find_by_id(id)
     todo.toggle_done
@@ -70,27 +70,27 @@ class DayController < ApplicationController
     redirect to "/#{date}"
   end
 
-  delete '/:date/todos/:id', authentication: true do |date, id|
+  delete '/:date/todos/:id', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     todo_list.remove(id)
 
     redirect to "/#{date}"
   end
 
-  post '/:date/list', authentication: true do |date|
+  post '/:date/list', auth: true do |date|
     List.create_empty(params[:title], date, user_id)
   end
 
-  delete '/:date/list/:id', authentication: true do |date, id|
+  delete '/:date/list/:id', auth: true do |date, id|
     List.delete_by_id(id, user_id)
   end
 
-  post '/:date/list/:id', authentication: true do |date, id|
+  post '/:date/list/:id', auth: true do |date, id|
     list = List.find_by_id(id, user_id)
     list.add(params[:text]) if list
   end
 
-  delete '/:date/list/:id/:item_id', authentication: true do |date, list_id, item_id|
+  delete '/:date/list/:id/:item_id', auth: true do |date, list_id, item_id|
     list = List.find_by_id(list_id, user_id)
     list.remove(item_id) if list
   end

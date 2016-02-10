@@ -4,7 +4,7 @@ class ApplicationController < Sinatra::Base
   set :views, File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../../public', __FILE__)
 
-  set :authentication do |should_be_authenticated|
+  set :auth do |should_be_authenticated|
     condition do
       if should_be_authenticated
         redirect '/login' if not authenticated?

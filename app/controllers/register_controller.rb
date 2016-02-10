@@ -1,9 +1,9 @@
 class RegisterController < ApplicationController
-  get '/', authentication: false do
+  get '/', auth: false do
     slim :'register/register'
   end
 
-  post '/', authentication: false do
+  post '/', auth: false do
     user = User.create(email: params[:email], password: params[:password])
     authenticate user if user.valid?
 
