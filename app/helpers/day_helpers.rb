@@ -5,8 +5,6 @@ module DayHelpers
   end
 
   def render_index(todos:, date:)
-    redirect to '/' if not valid_date?(date)
-
     @date = date
     @todos = todos
     @lists = List.find_by_date(date, user_id)

@@ -1,6 +1,10 @@
 class TodosController < ApplicationController
   helpers DayHelpers
 
+  before '/:date/*' do |date, *|
+    redirect to '/' if not valid_date? date
+  end
+
   get '/:date/todos/active', auth: true do |date|
     todos = TodoList.find_by_date(date, user_id).active_todos
 
