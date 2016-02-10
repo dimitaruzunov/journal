@@ -11,4 +11,4 @@ map('/') { run ApplicationController }
 map('/register') { run RegisterController }
 map('/login') { run LoginController }
 map('/logout') { run LogoutController }
-map('/day') { run DayController }
+map('/day') { run Rack::Cascade.new([DayController, ListController]) }
