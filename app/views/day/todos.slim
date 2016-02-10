@@ -1,8 +1,21 @@
 ul.list-group
-  - for todo in todo_list.todos
+  - for todo in todos
     li.list-group-item
-      = todo.text
-      form.inline-form action="/day/#{todo_list.date.to_s}/list/#{todo_list.id}/#{todo.id}" method="post"
+      form.inline-form.complete-form action="/day/#{date}/todos/complete/#{todo.id}" method="post"
+        input type="hidden" name="_method" value="put"
+        input.complete-checkbox type="checkbox" checked=todo.done
+
+      | #{todo.text} #{todo.time.hour} : #{todo.time.min}
+      a.btn.btn-default.btn-xs[href="/day/#{date}/todos/#{todo.id}/edit"
+                               role="button"] Edit
+
+      form.inline-form action="/day/#{date}/todos/#{todo.id}" method="post"
         input type="hidden" name="_method" value="delete"
         button.btn.btn-default.btn-xs type="submit"
           span.glyphicon.glyphicon-remove
+
+a.btn.btn-default.btn-sm[href="/day/#{date}" role="button"] All
+a.btn.btn-default.btn-sm[href="/day/#{date}/todos/active"
+                         role="button"] Active
+a.btn.btn-default.btn-sm[href="/day/#{date}/todos/completed"
+                         role="button"] Completed
