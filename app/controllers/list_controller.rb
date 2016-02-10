@@ -1,4 +1,10 @@
 class ListController < ApplicationController
+  helpers DayHelpers
+
+  before '/:date/*' do |date, *|
+    redirect to '/' if not valid_date? date
+  end
+
   post '/:date/list', auth: true do |date|
     List.create_empty(params[:title], date, user_id)
   end
