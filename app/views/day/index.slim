@@ -2,7 +2,7 @@ div.row
   div.col-xs-6
     h2 Todos
 
-    form.form-inline action="/day/#{@date_string}/todos" method="post"
+    form.form-inline action="/day/#{@date}/todos" method="post"
       .form-group
         input.form-control type="text" name="text" placeholder="Todo..."
       .form-group
@@ -16,15 +16,15 @@ div.row
             option value=min = min
       button.btn.btn-default type="submit" Add
 
-    == partial :'day/todos', locals: {todos: @todos, date: @date_string}
+    == partial :'day/todos', locals: {todos: @todos, date: @date}
 
   div.col-xs-6
     h2 Lists
 
-    form.form-inline action="/day/#{@date_string}/list" method="post"
+    form.form-inline action="/day/#{@date}/list" method="post"
       .form-group
         input.form-control type="text" name="title" placeholder="List title"
       button.btn.btn-default type="submit" Add
 
     - for list in @lists
-      == partial :'day/list', locals: {list: list, date: @date_string}
+      == partial :'day/list', locals: {list: list, date: @date}
