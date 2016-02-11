@@ -6,6 +6,7 @@ class User
   field :password_hash, type: String
   has_many :lists
   has_many :todo_lists
+  has_many :repeat_todos
 
   index({email: 1}, {unique: true, name: 'email_index'})
 

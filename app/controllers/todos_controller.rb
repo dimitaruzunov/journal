@@ -42,7 +42,12 @@ class TodosController < ApplicationController
       todo = RepeatTodo.find_by_id(id)
     end
 
-    todo.update(params[:text], params[:hour], params[:min])
+    if params[:count]
+      RepeatTodo.add(params[:text], todo.time, "#{params[:count]}#{params[:repeat]}", user_id)
+      todo_list.remove(id)
+    else
+      todo.update(params[:text], params[:hour], params[:min])
+    end
   end
 
   put '/:date/todos/complete/:id', auth: true do |date, id|
