@@ -2,13 +2,29 @@ class RepeatTodo
   include Mongoid::Document
 
   field :text, type: String
-  field :done, type: Boolean
   field :time, type: Time
   field :repeat, type: String
   belongs_to :user
 
+  def update(text, time, repeat_hash)
+    repeat = to_repeat_string(repeat_hash)
+    update_attributes(text: text, time: time, repeat: repeat)
+  end
+
+  def remove
+    TodoList.unset_repeat(id.to_s)
+    delete
+  end
+
+  private
+
+  def to_repeat_string(repeat_hash)
+    repeat_hash.values.join('')
+  end
+
   class << self
-    def add(text, time, repeat, user_id)
+    def add(text, time, repeat_hash, user_id)
+      repeat = to_repeat_string(repeat_hash)
       create(text: text, time: time, repeat: repeat, user_id: user_id)
     end
 
@@ -23,6 +39,10 @@ class RepeatTodo
     end
 
     private
+
+    def to_repeat_string(repeat_hash)
+      repeat_hash.values.join('')
+    end
 
     def time_to_date(time)
       Date.new(time.year, time.month, time.day)

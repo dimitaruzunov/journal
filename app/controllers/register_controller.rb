@@ -1,6 +1,6 @@
 class RegisterController < ApplicationController
   get '/', auth: false do
-    slim :'register/register'
+    slim :'register/index'
   end
 
   post '/', auth: false do

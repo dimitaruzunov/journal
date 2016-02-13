@@ -7,9 +7,9 @@ class ApplicationController < Sinatra::Base
   set :auth do |should_be_authenticated|
     condition do
       if should_be_authenticated
-        redirect '/login' if not authenticated?
-      else
-        redirect '/' if authenticated?
+        redirect '/login' unless authenticated?
+      elsif authenticated?
+        redirect '/'
       end
 
       true

@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   get '/', auth: false do
-    slim :'login/login'
+    slim :'login/index'
   end
 
   post '/', auth: false do

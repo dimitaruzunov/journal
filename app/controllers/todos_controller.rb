@@ -2,7 +2,7 @@ class TodosController < ApplicationController
   helpers DayHelpers
 
   before '/:date/*' do |date, *|
-    redirect to '/' if not valid_date? date
+    redirect to '/' unless valid_date? date
   end
 
   get '/:date/todos/active', auth: true do |date|
@@ -18,12 +18,14 @@ class TodosController < ApplicationController
   end
   
   post '/:date/todos', auth: true do |date|
-    time = Time.now
-    hour = params[:hour] || time.hour
-    min = params[:min] || time.min
-
     todo_list = TodoList.find_by_date(date, user_id)
-    todo_list.add(params[:text], hour, min)
+
+    if params[:repeat] and params[:count]
+      repeat = {count: params[:count], type: params[:type]}
+      todo_list.add(params[:text], get_time(date, params), repeat)
+    else
+      todo_list.add(params[:text], get_time(date, params))
+    end
 
     redirect to "/#{date}"
   end
@@ -31,6 +33,7 @@ class TodosController < ApplicationController
   get '/:date/todos/:id/edit', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     @todo = todo_list.find_by_id(id)
+    @repeat = to_repeat_hash(@todo.repeat_string) if @todo.repeat?
     @date = date
     slim :'day/edit_todo'
   end
@@ -38,16 +41,15 @@ class TodosController < ApplicationController
   put '/:date/todos/:id', auth: true do |date, id|
     todo_list = TodoList.find_by_date(date, user_id)
     todo = todo_list.find_by_id(id)
-    if not todo
-      todo = RepeatTodo.find_by_id(id)
+
+    if params[:repeat] and params[:count]
+      repeat = {count: params[:count], type: params[:type]}
+      todo.update(params[:text], get_time(date, params), repeat, user_id)
+    else
+      todo.update(params[:text], get_time(date, params))
     end
 
-    if params[:count]
-      RepeatTodo.add(params[:text], todo.time, "#{params[:count]}#{params[:repeat]}", user_id)
-      todo_list.remove(id)
-    else
-      todo.update(params[:text], params[:hour], params[:min])
-    end
+    redirect to "/#{date}"
   end
 
   put '/:date/todos/complete/:id', auth: true do |date, id|

@@ -1,30 +1,16 @@
 div.row
   div.col-xs-6
     h2 Todos
-
-    form.form-inline action="/day/#{@date}/todos" method="post"
-      .form-group
-        input.form-control type="text" name="text" placeholder="Todo..."
-      .form-group
-        label for="hour" Hour:
-        select.form-control#hour name="hour"
-          - 0.upto 24 do |hour|
-            option value=hour = hour
-        label for="min" Minute:
-        select.form-control#min name="min"
-          - 0.upto 59 do |min|
-            option value=min = min
-      button.btn.btn-default type="submit" Add
-
+    == partial :'day/add_todo', locals: {date: @date}
     == partial :'day/todos', locals: {todos: @todos, date: @date}
 
   div.col-xs-6
     h2 Lists
 
-    form.form-inline action="/day/#{@date}/list" method="post"
+    form action="/day/#{@date}/list" method="post"
       .form-group
         input.form-control type="text" name="title" placeholder="List title"
-      button.btn.btn-default type="submit" Add
+      button.btn.btn-primary type="submit" Add
 
     - for list in @lists
       == partial :'day/list', locals: {list: list, date: @date}

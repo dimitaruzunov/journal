@@ -1,0 +1,24 @@
+form action="/day/#{date}/todos" method="post"
+  .form-group
+    input.form-control type="text" name="text" placeholder="Todo..."
+  .form-group
+    label for="hour" Hour:
+    select.form-control.inline#hour name="hour"
+      - 0.upto 24 do |hour|
+        option value=hour = hour
+    label for="min" Minute:
+    select.form-control.inline#min name="min"
+      - 0.upto 59 do |min|
+        option value=min = min
+    .checkbox.inline
+      label
+        input type="checkbox" name="repeat"
+          strong Repeat every
+    select.form-control.inline name="count"
+      option value=nil count
+      - 1.upto 30 do |count|
+        option value=count = count
+    select.form-control.inline name="type"
+      option value="d" days
+      option value="w" weeks
+  button.btn.btn-primary type="submit" Add

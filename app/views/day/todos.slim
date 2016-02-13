@@ -5,9 +5,9 @@ ul.list-group
         input type="hidden" name="_method" value="put"
         input.complete-checkbox type="checkbox" checked=todo.done
 
-      | #{todo.text} #{todo.time.hour} : #{todo.time.min}
-      a.btn.btn-default.btn-xs[href="/day/#{date}/todos/#{todo.id}/edit"
-                               role="button"] Edit
+      span.text #{todo.text} #{todo.time.hour} : #{todo.time.min}
+      a.btn.btn-default.btn-xs.edit[href="/day/#{date}/todos/#{todo.id}/edit"
+                                    role="button"] Edit
 
       form.inline-form action="/day/#{date}/todos/#{todo.id}" method="post"
         input type="hidden" name="_method" value="delete"

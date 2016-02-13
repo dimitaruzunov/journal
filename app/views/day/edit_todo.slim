@@ -1,23 +1,25 @@
-form.form-inline action="/day/#{@date}/todos/#{@todo.id}" method="post"
+form action="/day/#{@date}/todos/#{@todo.id}" method="post"
   input type="hidden" name="_method" value="put"
   .form-group
     input.form-control type="text" name="text" placeholder="Todo..." value=@todo.text
   .form-group
     label for="hour" Hour:
-    select.form-control#hour name="hour"
+    select.form-control.inline#hour name="hour"
       - 0.upto 24 do |hour|
-        option value=hour = hour
+        option value=hour selected=(@todo.time.hour == hour) = hour
     label for="min" Minute:
-    select.form-control#min name="min"
+    select.form-control.inline#min name="min"
       - 0.upto 59 do |min|
-        option value=min = min
-  .form-group
-    | Repeat every
-    select.form-control name="count"
+        option value=min selected=(@todo.time.min == min) = min
+    .checkbox.inline
+      label
+        input type="checkbox" name="repeat" checked=@todo.repeat?
+          strong Repeat every
+    select.form-control.inline name="count"
       option value=nil count
       - 1.upto 30 do |count|
-        option value=count = count
-    select.form-control name="repeat"
+        option value=count selected=(@repeat and @repeat[:count] == count) = count
+    select.form-control.inline name="type"
       option value="d" days
-      option value="w" weeks
+      option value="w" selected=(@repeat and @repeat[:type] == 'w') weeks
   button.btn.btn-default type="submit" Edit
